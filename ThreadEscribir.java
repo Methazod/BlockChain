@@ -92,7 +92,7 @@ public class ThreadEscribir extends Thread{
 					Bloque b;
 					int j= 0;					
 					while(true) {						
-						if(blockChain.isEmpty()) b = new Bloque(null, LocalDateTime.now().toString(), j++, transacciones);
+						if(blockChain.isEmpty()) b = new Bloque("", LocalDateTime.now().toString(), j++, transacciones);
 						else b = new Bloque(Utilities.hashear(blockChain.getLast().getBytes()), LocalDateTime.now().toString(), j++, transacciones);
 						String bloqueHasheado = Utilities.hashear(b.getBytes());						
 						if(bloqueHasheado.substring(0, 3).equals("000")) break;												
@@ -104,13 +104,13 @@ public class ThreadEscribir extends Thread{
 					// Paso 4 - Mandar confirmacion depende de las respuestas					
 					if(!respuestas.contains(false)) {
 						blockChain.add(b);
-						transacciones.removeAll(b.getTransacciones());
+						transacciones.removeAll(blockChain.getLast().getTransacciones());
 						enviar("Añadir");
-						System.out.println("Añadido");
+						System.out.println("Nuevo bloque añadido " + blockChain.getLast());
 					}
 					else {
 						enviar("No añadir");
-						System.out.println("No añadido");
+						System.out.println("Nuevo bloque no añadido");
 					}
 					respuestas.clear();
 				}
@@ -128,6 +128,7 @@ public class ThreadEscribir extends Thread{
 					transacciones.add(t);					
 					
 					enviar(t);
+					System.out.println("Nueva transaccion añadida " + transacciones.getLast());
 				}							
 			}		
 		} catch (EOFException e) {

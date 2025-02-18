@@ -100,27 +100,22 @@ public class ThreadLeer extends Thread{
 						enviar("/minar");
 						enviar(""+idRecibido);
 						// Paso 1 - Recibir bloque
-						Bloque respuestaBloque = recibirBloque();						
-						System.out.println("Bloque Recibido");
+						Bloque respuestaBloque = recibirBloque();
 						// Paso 2 - Sacar hash del bloque
-						String bloqueHasheado = Utilities.hashear(respuestaBloque.getBytes());
-						System.out.println("Bloque hasheado");
+						String bloqueHasheado = Utilities.hashear(respuestaBloque.getBytes());						
 						// Paso 3 - enviar respuesta
-						enviar((bloqueHasheado.substring(0, 3).equals("000"))?"True":"false");
-						System.out.println("Respuesta enviada");
+						enviar((bloqueHasheado.substring(0, 3).equals("000"))?"True":"false");						
 						//Paso 4 - Esperar confirmacion y actuar
 						if(recibir().equalsIgnoreCase("Añadir")) {
 							blockChain.add(respuestaBloque);
 							transacciones.removeAll(blockChain.getLast().getTransacciones());
-							System.out.println("Nuevo bloque añadido: " + blockChain.getLast());
+							System.out.println("Nuevo bloque añadido " + blockChain.getLast());
 						} else System.out.println("Bloque no añadido");
 					}
-					else {
-						System.out.println("Esperando respuesta");
+					else {						
 						semaforoRecibir.acquire();
 						respuestas.add(Boolean.parseBoolean(recibir()));
-						semaforoRecibir.release();
-						System.out.println("Respuesta guardada");
+						semaforoRecibir.release();						
 					}														
 				}
 				if(respuesta.equals("/enviar")) {

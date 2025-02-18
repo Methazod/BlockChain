@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Clase que crea un bloque
@@ -53,7 +54,8 @@ public class Bloque implements Serializable{
 		this.hashAnteriorBloque = hash;
 		this.fechaCreacion = fecha;
 		this.nonce = nonce;
-		transacciones = tr;
+		transacciones = new ArrayList<Transaccion>();
+		transacciones.addAll(tr);
 	}
 	
 	/**
@@ -68,7 +70,7 @@ public class Bloque implements Serializable{
 		this.fechaCreacion = fecha;
 		this.nonce = nonce;
 		transacciones = new ArrayList<Transaccion>();
-	}
+	}	
 	
 	/**
 	 * Getter del hash
@@ -167,19 +169,43 @@ public class Bloque implements Serializable{
 	 * Metodo que sobreescribe la manera en la que se muestra un bloque
 	 */
 	@Override
-	public String toString() {
-		String transaccion = "";
-		for(Transaccion tr : transacciones) {
-			if(tr == transacciones.getLast()) {
-				transaccion += "	"+tr+",\n";
-			} else {
-				transaccion += "	"+tr+"\n";
-			}
-		}
-		return "Hash Anterior: " + hashAnteriorBloque == null?"No hay":hashAnteriorBloque 
-				+ ", fecha de creacion:" + fechaCreacion
-				+ ", nonce:" + nonce
-				+ ", transacciones: {\n" + transaccion
-				+ "}";
+	public String toString() {		
+		StringBuilder transaccion = new StringBuilder();
+	    
+	    for (int i = 0; i < transacciones.size(); i++) {
+	        transaccion.append("\t\t") // Se encarga de añadir la tabulación extra
+	                   .append(transacciones.get(i).toString().replace("\n", "\n\t\t")); // Indentación correcta
+	        if (i < transacciones.size() - 1) {
+	            transaccion.append(",\n");
+	        }
+	    }
+	    
+	    return "{\n" 
+	            + "\tHash Anterior: " + (hashAnteriorBloque.isBlank() ? "No hay" : hashAnteriorBloque) + ",\n"
+	            + "\tFecha de creacion: " + fechaCreacion + ",\n"
+	            + "\tNonce: " + nonce + ",\n"
+	            + "\tTransacciones: " + (transacciones.isEmpty() ? "No hay" : "{\n" + transaccion + "\n\t}") + "\n"
+	            + "}";
+	}
+	
+	/**
+	 * Metodo que compara un objeto con esta instancia
+	 */
+	@Override
+	public boolean equals(Object obj) {		
+		if(obj == null || getClass() != obj.getClass()) return false;
+		Bloque bl = (Bloque) obj;		
+		return bl.getHashAnteriorBloque().equals(this.getHashAnteriorBloque())  
+			   && bl.getTransacciones().equals(this.getTransacciones())	
+			   && bl.getFechaCreacion().equals(this.getFechaCreacion()) 			   			   
+			   && bl.getNonce() == this.getNonce();
+	}
+	
+	/**
+	 * Metodo que devuelve un hash para una tabla hash
+	 */
+	@Override
+	public int hashCode() {		
+		return Objects.hash(getHashAnteriorBloque(), getTransacciones(), getFechaCreacion(), getNonce());
 	}
 }

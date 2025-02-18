@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Clase que crea una transaccion.
@@ -49,42 +50,34 @@ public class Transaccion implements Serializable{
 		this.valor = valor;
 		this.id = Utilities.hashear(this.getBytes());
 	}
-
+	
 	/**
 	 * Getter del id
 	 * 
 	 * @return el id
 	 */
-	public String getId() {
-		return id;
-	}
+	public String getId() { return id; }
 
 	/**
 	 * Getter del emisor
 	 * 
 	 * @return el emisor
 	 */
-	public int getEmisor() {
-		return emisor;
-	}
+	public int getEmisor() { return emisor; }
 
 	/**
 	 * Getter del receptor
 	 * 
 	 * @return el receptor
 	 */
-	public int getReceptor() {
-		return receptor;
-	}
+	public int getReceptor() { return receptor;	}
 
 	/**
 	 * Getter del valor
 	 * 
 	 * @return el valor
 	 */
-	public int getValor() {
-		return valor;
-	}
+	public int getValor() { return valor; }
 	
 	/**
 	 * Metodo que transforma una transaccion a bytes[]
@@ -121,9 +114,32 @@ public class Transaccion implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "id: " + id
-				+ ", emisor: " + emisor
-				+ ", receptor: " + receptor 
-				+ ", monto: " + valor;
+	    return "{\n" 
+	            + "\tid: " + id + ",\n"
+	            + "\temisor: " + emisor + ",\n"
+	            + "\treceptor: " + receptor + ",\n"
+	            + "\tmonto: " + valor + "\n"
+	            + "}";
+	}
+	
+	/**
+	 * Metodo que compara un objeto con esta instancia
+	 */
+	@Override
+	public boolean equals(Object obj) {		
+		if(obj == null || getClass() != obj.getClass()) return false;
+		Transaccion tr = (Transaccion) obj;		
+		return tr.getId().equals(this.getId())  
+			   && tr.getEmisor() == this.getEmisor()	
+			   && tr.getReceptor() == this.getReceptor() 
+			   && tr.getValor() == this.getValor();					
+	}
+	
+	/**
+	 * Metodo que devuelve un hash para una tabla hash
+	 */
+	@Override
+	public int hashCode() {		
+		return Objects.hash(getId(), getEmisor(), getReceptor(), getValor());
 	}
 }

@@ -7,9 +7,11 @@ package practica7BlockChain;
  */
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetAddress;
 
 /**
  * Clase que crea un cliente y lo inicia.
@@ -24,12 +26,9 @@ public class MainNodo {
 		try {
 			Scanner escaner = new Scanner(System.in);		  		  
 			int puertoServidor =  cargarPuerto();	  		  		  		 
-			String hostServidor = cargarHost();	  
-			System.out.print("Introduce el host del cliente: ");
-			String hostCliente = escaner.nextLine();
-			System.out.println("");
+			String hostServidor = cargarHost();	  									
 			System.out.print("Introduce el puerto del cliente: ");						
-			Nodo cliente = new Nodo(hostServidor, puertoServidor, hostCliente, escaner.nextInt());	
+			Nodo cliente = new Nodo(hostServidor, puertoServidor, InetAddress.getLocalHost().getHostAddress(), escaner.nextInt());	
 			System.out.println("");
 			cliente.startClient(escaner);		  	 
 		} catch (Exception e) {
@@ -40,14 +39,13 @@ public class MainNodo {
 	/**
 	 * Metodo que lee el fichero .env
 	 * y carga las variables con su informacion.
-	 * 
-	 * @param localhost el host del master
-	 * @param puerto el puerto del master
+	 *
 	 * @throws FileNotFoundException si el fichero no existe
 	 * @throws IOException si el stream falla.
 	 */
-	public static String cargarHost() throws FileNotFoundException, IOException {     	
-	  BufferedReader b = new BufferedReader(new FileReader("D://Eclipse/ejerciciosPSP/src/practica7BlockChain/.env")); 
+	public static String cargarHost() throws FileNotFoundException, IOException {		
+		
+	  BufferedReader b = new BufferedReader(new FileReader(new File("src/practica7BlockChain/.env").getAbsolutePath()));
 	  String linea = b.readLine();
 	  while(linea != null) {
 		  String[] lineaPartida = linea.split("=");
@@ -64,14 +62,12 @@ public class MainNodo {
 	/**
 	 * Metodo que lee el fichero .env
 	 * y carga las variables con su informacion.
-	 * 
-	 * @param localhost el host del master
-	 * @param puerto el puerto del master
+	 *
 	 * @throws FileNotFoundException si el fichero no existe
 	 * @throws IOException si el stream falla.
 	 */
-	public static int cargarPuerto() throws FileNotFoundException, IOException {     	
-	  BufferedReader b = new BufferedReader(new FileReader("D://Eclipse/ejerciciosPSP/src/practica7BlockChain/.env")); 
+	public static int cargarPuerto() throws FileNotFoundException, IOException {		
+	  BufferedReader b = new BufferedReader(new FileReader(new File("src/practica7BlockChain/.env").getAbsolutePath()));
 	  String linea = b.readLine();
 	  while(linea != null) {
 		  String[] lineaPartida = linea.split("=");				  
