@@ -21,6 +21,7 @@ Este proyecto implementa una cadena de bloques (blockchain) simple utilizando el
    git clone https://github.com/Methazod/BlockChain.git
 
 ## Uso
+0. Editar el archivo .env con la ip y puerto del nodo maestro.
 1. Iniciar el nodo maestro.
 2. Iniciar uno o más nodos secundarios.
 3. Los nodos comenzarán a comunicarse entre sí, permitiendo la creación y propagación de bloques en la cadena.
