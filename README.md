@@ -20,13 +20,13 @@ Este proyecto implementa una cadena de bloques (blockchain) simple utilizando el
 1. Clona este repositorio en tu máquina local:
    git clone https://github.com/Methazod/BlockChain.git
 
-## Uso:
-1. Iniciar el nodo maestro:
-2. Iniciar uno o más nodos secundarios:
+## Uso
+1. Iniciar el nodo maestro.
+2. Iniciar uno o más nodos secundarios.
 3. Los nodos comenzarán a comunicarse entre sí, permitiendo la creación y propagación de bloques en la cadena.
 4. Crearas una transaccion con /enviar y crearas un bloque /minar.
 
-## Contribuciones:
+## Contribuciones
 Las contribuciones son bienvenidas. Si deseas mejorar este proyecto, por favor sigue estos pasos:
 
 1. Haz un fork del repositorio.
