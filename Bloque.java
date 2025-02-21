@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -46,13 +47,12 @@ public class Bloque implements Serializable{
 	 * Construye un bloque
 	 * 
 	 * @param hash el hash del bloque anterior
-	 * @param fecha la fecha de creacion
 	 * @param nonce el nonce utilizado
 	 * @param tr lista de transacciones
 	 */
-	public Bloque(String hash, String fecha, int nonce, ArrayList<Transaccion> tr) {
+	public Bloque(String hash, int nonce, ArrayList<Transaccion> tr) {
 		this.hashAnteriorBloque = hash;
-		this.fechaCreacion = fecha;
+		this.fechaCreacion = LocalDateTime.now().toString();
 		this.nonce = nonce;
 		transacciones = new ArrayList<Transaccion>();
 		transacciones.addAll(tr);
@@ -62,12 +62,11 @@ public class Bloque implements Serializable{
 	 * Construye un bloque
 	 * 
 	 * @param hash el hash del bloque anterior
-	 * @param fecha la fecha de creacion
 	 * @param nonce el nonce utilizado
 	 */
-	public Bloque(String hash, String fecha, int nonce) {
+	public Bloque(String hash, int nonce) {
 		this.hashAnteriorBloque = hash;
-		this.fechaCreacion = fecha;
+		this.fechaCreacion = LocalDateTime.now().toString();
 		this.nonce = nonce;
 		transacciones = new ArrayList<Transaccion>();
 	}	

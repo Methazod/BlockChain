@@ -92,8 +92,8 @@ public class ThreadEscribir extends Thread{
 					Bloque b;
 					int j= 0;					
 					while(true) {						
-						if(blockChain.isEmpty()) b = new Bloque("", LocalDateTime.now().toString(), j++, transacciones);
-						else b = new Bloque(Utilities.hashear(blockChain.getLast().getBytes()), LocalDateTime.now().toString(), j++, transacciones);
+						if(blockChain.isEmpty()) b = new Bloque("", j++, transacciones);
+						else b = new Bloque(Utilities.hashear(blockChain.getLast().getBytes()), j++, transacciones);
 						String bloqueHasheado = Utilities.hashear(b.getBytes());						
 						if(bloqueHasheado.substring(0, 3).equals("000")) break;												
 					}

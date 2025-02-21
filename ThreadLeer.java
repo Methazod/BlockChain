@@ -151,7 +151,7 @@ public class ThreadLeer extends Thread{
 	 * @throws Exception por si el descifrado falla
 	 */
 	private Bloque descifrarBloque(byte[] encriptado) throws Exception {
-		Bloque b = new Bloque("", "", 0);
+		Bloque b = new Bloque("", 0);
 		return b.toBloque(Utilities.descifrarAES(key, encriptado));
 	}
 	 
