@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -36,6 +37,8 @@ public class Transaccion implements Serializable{
 	 */
 	private int valor;
 	
+	private String fecha;
+	
 	/**
 	 * Construye una transaccion
 	 * 
@@ -48,6 +51,7 @@ public class Transaccion implements Serializable{
 		this.emisor = emisor;
 		this.receptor = receptor;
 		this.valor = valor;
+		this.fecha = LocalDateTime.now().toString();
 		this.id = Utilities.hashear(this.getBytes());
 	}
 	
@@ -119,6 +123,7 @@ public class Transaccion implements Serializable{
 	            + "\temisor: " + emisor + ",\n"
 	            + "\treceptor: " + receptor + ",\n"
 	            + "\tmonto: " + valor + "\n"
+	            + "\tfecha: " + fecha + "\n"
 	            + "}";
 	}
 	
@@ -132,7 +137,8 @@ public class Transaccion implements Serializable{
 		return tr.getId().equals(this.getId())  
 			   && tr.getEmisor() == this.getEmisor()	
 			   && tr.getReceptor() == this.getReceptor() 
-			   && tr.getValor() == this.getValor();					
+			   && tr.getValor() == this.getValor()
+			   && tr.fecha.equals(this.fecha);					
 	}
 	
 	/**
@@ -140,6 +146,6 @@ public class Transaccion implements Serializable{
 	 */
 	@Override
 	public int hashCode() {		
-		return Objects.hash(getId(), getEmisor(), getReceptor(), getValor());
+		return Objects.hash(getId(), getEmisor(), getReceptor(), getValor(), fecha);
 	}
 }
